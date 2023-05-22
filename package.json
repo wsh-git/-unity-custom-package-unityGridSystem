@@ -1,0 +1,13 @@
+{
+  "name": "com.wshunity.gridsystem",
+  "displayName": "Wsh Unity GridSystem",
+  "version": "0.0.1",
+  "unity": "2017.2",
+  "keywords": [
+    "Base Grid"
+  ],
+  "description": "This is a very base grid system.",
+  "repository": {
+    "com.wshunity.log": "https://github.com/wsh-git/unityLog.git"
+  }
+}
