@@ -8,9 +8,8 @@
   ],
   "description": "This is a very base grid system.",
   "repository": {
-    "com.wshunity.log": "https://github.com/wsh-git/unityLog.git"
-  },
-  "dependencies": {
-    "com.wshunity.log": "0.0.1"
+    "url": "https://github.com/wsh-git/-unity-custom-package-unityGridSystem.git",
+    "type": "git",
+    "revision": "9d824e3aeca574022eff896b9c751097dadd0619"
   }
 }
