@@ -13,6 +13,6 @@
     "revision": "9d824e3aeca574022eff896b9c751097dadd0619"
   },
   "dependencies": {
-    "com.wshunity.log": "https://github.com/wsh-git/unity-custom-package-unityLog.git"
+    "com.wshunity.log": "https://github.com/wsh-git/unity-custom-package-unityLog.git#1.0.0"
   }
 }
