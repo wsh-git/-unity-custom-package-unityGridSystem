@@ -16,8 +16,5 @@
     "name": "wshunity",
     "email": "",
     "url": ""
-  },
-  "dependencies": {
-    "com.wshunity.log": "https://github.com/wsh-git/unity-custom-package-unityLog.git"
   }
 }
