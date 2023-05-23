@@ -9,5 +9,8 @@
   "description": "This is a very base grid system.",
   "repository": {
     "com.wshunity.log": "https://github.com/wsh-git/unityLog.git"
+  },
+  "dependencies": {
+    "com.wshunity.log": "0.0.1"
   }
 }
