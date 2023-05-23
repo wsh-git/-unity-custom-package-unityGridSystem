@@ -6,7 +6,7 @@
   "keywords": [
     "Base Grid"
   ],
-  "description": "This is a very base grid system.",
+  "description": "This is a very base grid system.\n\n依赖项：\n        Wsh Unity Log:\n                 https://github.com/wsh-git/unity-custom-package-unityLog.git",
   "repository": {
     "url": "https://github.com/wsh-git/unity-custom-package-unityGridSystem.git",
     "type": "git",
