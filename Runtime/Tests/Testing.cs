@@ -2,6 +2,32 @@ using UnityEngine;
 
 namespace Wsh.GridSystem {
 
+    public class IntClass : IGridObject{
+        private int m_x;
+        private int m_y;
+        private int m_value;
+
+        public IntClass() : this(0) {
+            
+        }
+
+        public IntClass(int value) {
+            m_value = value;
+        }
+
+        public int GetX() {
+            return m_x;
+        }
+
+        public int GetY() {
+            return m_y;
+        }
+        
+        public override string ToString() {
+            return m_value.ToString();
+        }
+    }
+    
     public class Testing : MonoBehaviour {
 
         [SerializeField]
@@ -15,25 +41,25 @@ namespace Wsh.GridSystem {
         [SerializeField]
         private int height;
 
-        private Grid grid;
+        private GridSystem.Grid<IntClass> grid;
 
         void Start() {
-            grid = new Grid(width, height, cellSize, new Vector3(offsetX, offsetY));
+            grid = new GridSystem.Grid<IntClass>(width, height, cellSize, new Vector3(offsetX, offsetY), (GridSystem.Grid<IntClass> g, int x, int y) => { return new IntClass();});
             grid.onGridValueChanged += OnChangedGrid;
         }
 
         private void OnChangedGrid(object sender, System.EventArgs e) {
-            Grid.OnGridValueChangeEventArgs ge = e as Grid.OnGridValueChangeEventArgs;
+            Grid<IntClass>.OnGridValueChangeEventArgs ge = e as Grid<IntClass>.OnGridValueChangeEventArgs;
             Debug.Log(ge.x + "_" + ge.y);
         }
 
         void Update() {
             if(Input.GetMouseButtonDown(0)) {
-                grid.SetValue(ToolUtils.GetMouseWorldPosition(), 99);
+                grid.SetGridObject(ToolUtils.GetMouseWorldPosition(), new IntClass(99));
             }
         
             if(Input.GetMouseButtonDown(1)) {
-                Debug.Log(grid.GetValue(ToolUtils.GetMouseWorldPosition()));
+                Debug.Log(grid.GetGridObject(ToolUtils.GetMouseWorldPosition()));
             }
         }
 
@@ -41,9 +67,9 @@ namespace Wsh.GridSystem {
 
     public class HeatMapVisual {
 
-        private Grid m_grid;
+        private GridSystem.Grid<IntClass> m_grid;
 
-        public HeatMapVisual(Grid grid) {
+        public HeatMapVisual(Grid<IntClass> grid) {
             m_grid = grid;
             Vector3[] vertices;
             Vector2[] uvs;
