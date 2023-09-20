@@ -25,7 +25,7 @@ namespace Wsh.GridSystem {
         private TGridObject[,] m_gridArray;
         private TextMesh[,] m_debugTextArray;
 
-        public Grid(int width, int height, float cellSize, Vector3 originPosition, Func<Grid<TGridObject>, int, int, TGridObject> createGridObject) {
+        public Grid(int width, int height, float cellSize, Vector3 originPosition, bool isDebug, Func<Grid<TGridObject>, int, int, float, TGridObject> createGridObject) {
             m_width = width;
             m_height = height;
             m_cellSize = cellSize;
@@ -35,12 +35,10 @@ namespace Wsh.GridSystem {
 
             for(int x = 0; x < m_gridArray.GetLength(0); x++) {
                 for(int y = 0; y < m_gridArray.GetLength(1); y++) {
-                    m_gridArray[x, y] = createGridObject(this, x, y);
+                    m_gridArray[x, y] = createGridObject(this, x, y, cellSize);
                 }
             }
-
-            bool showDebug = false;
-            if(showDebug) {
+            if(isDebug) {
                 m_debugTextArray = new TextMesh[m_width, m_height];
 
                 for(int x = 0; x < m_gridArray.GetLength(0); x++) {

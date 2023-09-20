@@ -44,7 +44,7 @@ namespace Wsh.GridSystem {
         private GridSystem.Grid<IntClass> grid;
 
         void Start() {
-            grid = new GridSystem.Grid<IntClass>(width, height, cellSize, new Vector3(offsetX, offsetY), (GridSystem.Grid<IntClass> g, int x, int y) => { return new IntClass();});
+            grid = new GridSystem.Grid<IntClass>(width, height, cellSize, new Vector3(offsetX, offsetY), false, (GridSystem.Grid<IntClass> g, int x, int y, float cellSize) => { return new IntClass();});
             grid.onGridValueChanged += OnChangedGrid;
         }
 
