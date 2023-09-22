@@ -53,7 +53,12 @@ namespace Wsh.GridSystem {
             }
         }
 
-        public Vector3 GetWorldPosition(int x, int y) {
+        public Vector3 GetWorldPosition(int x, int y, bool isShowDebug = false) {
+            if(isShowDebug) {
+                Debug.Log("Grid0" + x.ToString() + "_" + y.ToString());
+                Debug.Log("Grid1" + m_cellSize.ToString());
+                Debug.Log("Grid3" + m_originPosition.ToString());
+            }
             return new Vector3(x, y) * m_cellSize + m_originPosition;
         }
 
@@ -96,10 +101,22 @@ namespace Wsh.GridSystem {
             SetGridObject(x, y, value);
         }
 
-        public TGridObject GetGridObject(int x, int y) {
+        public TGridObject GetGridObject(int x, int y, bool isShowLog = false) {
+            if(isShowLog) {
+                Debug.Log("GetGridObject xy" + x.ToString() + "_" + y.ToString());
+            }
+            
             if(CheckLimit(x, y)) {
+                if(isShowLog) {
+                    Debug.Log("GetGridObject 1");
+                }
+                
                 return m_gridArray[x, y];
             } else {
+                if(isShowLog) {
+                    Debug.Log("GetGridObject 3");
+                }
+                
                 return default(TGridObject);
             }
         }
