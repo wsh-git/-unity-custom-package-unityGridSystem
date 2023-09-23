@@ -22,7 +22,7 @@ namespace Wsh.GridSystem {
         private int m_height;
         private float m_cellSize;
         private Vector3 m_originPosition;
-        private TGridObject[,] m_gridArray;
+        private TGridObject[][] m_gridArray;
         private TextMesh[,] m_debugTextArray;
 
         public Grid(int width, int height, float cellSize, Vector3 originPosition, bool isDebug, Func<Grid<TGridObject>, int, int, float, TGridObject> createGridObject) {
@@ -31,19 +31,20 @@ namespace Wsh.GridSystem {
             m_cellSize = cellSize;
             m_originPosition = originPosition;
 
-            m_gridArray = new TGridObject[m_width, m_height];
+            m_gridArray = new TGridObject[m_width][];
 
-            for(int x = 0; x < m_gridArray.GetLength(0); x++) {
-                for(int y = 0; y < m_gridArray.GetLength(1); y++) {
-                    m_gridArray[x, y] = createGridObject(this, x, y, cellSize);
+            for(int x = 0; x < m_width; x++) {
+                m_gridArray[x] = new TGridObject[m_height];
+                for(int y = 0; y < m_height; y++) {
+                    m_gridArray[x][y] = createGridObject(this, x, y, cellSize);
                 }
             }
             if(isDebug) {
                 m_debugTextArray = new TextMesh[m_width, m_height];
 
-                for(int x = 0; x < m_gridArray.GetLength(0); x++) {
-                    for(int y = 0; y < m_gridArray.GetLength(1); y++) {
-                        m_debugTextArray[x, y] = ToolUtils.CreateWorldText(m_gridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * 0.5f, 20, Color.white, TextAnchor.MiddleCenter);
+                for(int x = 0; x < m_width; x++) {
+                    for(int y = 0; y < m_height; y++) {
+                        m_debugTextArray[x, y] = ToolUtils.CreateWorldText(m_gridArray[x][y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * 0.5f, 20, Color.white, TextAnchor.MiddleCenter);
                         DebugDrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y+1));
                         DebugDrawLine(GetWorldPosition(x, y), GetWorldPosition(x+1, y));
                     }
@@ -53,12 +54,7 @@ namespace Wsh.GridSystem {
             }
         }
 
-        public Vector3 GetWorldPosition(int x, int y, bool isShowDebug = false) {
-            if(isShowDebug) {
-                Debug.Log("Grid0" + x.ToString() + "_" + y.ToString());
-                Debug.Log("Grid1" + m_cellSize.ToString());
-                Debug.Log("Grid3" + m_originPosition.ToString());
-            }
+        public Vector3 GetWorldPosition(int x, int y) {
             return new Vector3(x, y) * m_cellSize + m_originPosition;
         }
 
@@ -77,9 +73,9 @@ namespace Wsh.GridSystem {
 
         public void SetGridObject(int x, int y, TGridObject value) {
             if(CheckLimit(x, y)) {
-                m_gridArray[x, y] = value;
+                m_gridArray[x][y] = value;
                 if(m_debugTextArray != null && m_debugTextArray[x, y] != null) {
-                    m_debugTextArray[x, y].text = m_gridArray[x, y].ToString();
+                    m_debugTextArray[x, y].text = m_gridArray[x][y].ToString();
                 }
                 if(onGridValueChanged != null) {
                     onGridValueChanged(this, new OnGridValueChangeEventArgs{ x = x, y = y });
@@ -88,9 +84,9 @@ namespace Wsh.GridSystem {
         }
 
         public void ForeachGridObject(Action<TGridObject> onForeachHandler) {
-            for(int x = 0; x < m_gridArray.GetLength(0); x++) {
-                for(int y = 0; y < m_gridArray.GetLength(1); y++) {
-                    onForeachHandler?.Invoke(m_gridArray[x, y]);
+            for(int x = 0; x < m_width; x++) {
+                for(int y = 0; y < m_height; y++) {
+                    onForeachHandler?.Invoke(m_gridArray[x][y]);
                 }
             }
         }
@@ -101,22 +97,10 @@ namespace Wsh.GridSystem {
             SetGridObject(x, y, value);
         }
 
-        public TGridObject GetGridObject(int x, int y, bool isShowLog = false) {
-            if(isShowLog) {
-                Debug.Log("GetGridObject xy" + x.ToString() + "_" + y.ToString());
-            }
-            
+        public TGridObject GetGridObject(int x, int y) {
             if(CheckLimit(x, y)) {
-                if(isShowLog) {
-                    Debug.Log("GetGridObject 1");
-                }
-                
-                return m_gridArray[x, y];
+                return m_gridArray[x][y];
             } else {
-                if(isShowLog) {
-                    Debug.Log("GetGridObject 3");
-                }
-                
                 return default(TGridObject);
             }
         }
