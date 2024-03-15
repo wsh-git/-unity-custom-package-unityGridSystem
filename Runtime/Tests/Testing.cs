@@ -3,6 +3,7 @@ using UnityEngine;
 namespace Wsh.GridSystem {
 
     public class IntClass : IGridObject{
+
         private int m_x;
         private int m_y;
         private int m_value;
@@ -26,6 +27,7 @@ namespace Wsh.GridSystem {
         public override string ToString() {
             return m_value.ToString();
         }
+
     }
     
     public class Testing : MonoBehaviour {
@@ -44,7 +46,8 @@ namespace Wsh.GridSystem {
         private GridSystem.Grid<IntClass> grid;
 
         void Start() {
-            grid = new GridSystem.Grid<IntClass>(width, height, cellSize, new Vector3(offsetX, offsetY), false, (GridSystem.Grid<IntClass> g, int x, int y, float cellSize) => { return new IntClass();});
+            GridInfo gridInfo = new GridInfo(width, height, cellSize, offsetX, offsetY);
+            grid = new GridSystem.Grid<IntClass>(width, height, cellSize, new Vector3(offsetX, offsetY), true, (GridSystem.Grid<IntClass> g, int x, int y, float cellSize) => { return new IntClass();});
             grid.onGridValueChanged += OnChangedGrid;
         }
 

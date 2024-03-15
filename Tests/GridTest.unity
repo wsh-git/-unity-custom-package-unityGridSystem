@@ -314,8 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed9522eca5b3e3647a57c642e22b589e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetX: 30
-  offsetY: -30
+  offsetX: 0
+  offsetY: 0
   cellSize: 10
   width: 3
   height: 2
