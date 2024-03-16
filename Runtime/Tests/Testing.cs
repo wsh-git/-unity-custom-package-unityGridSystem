@@ -1,4 +1,5 @@
 using UnityEngine;
+using Wsh.Mathematics;
 
 namespace Wsh.GridSystem {
 
@@ -45,9 +46,11 @@ namespace Wsh.GridSystem {
 
         private GridSystem.Grid<IntClass> grid;
 
+        private Vect2 m_tempPosition;
+        
         void Start() {
             GridInfo gridInfo = new GridInfo(width, height, cellSize, offsetX, offsetY);
-            grid = new GridSystem.Grid<IntClass>(width, height, cellSize, new Vector3(offsetX, offsetY), true, (GridSystem.Grid<IntClass> g, int x, int y, float cellSize) => { return new IntClass();});
+            grid = new GridSystem.Grid<IntClass>(gridInfo, true, (GridSystem.Grid<IntClass> g, int x, int y, float cellSize) => { return new IntClass();});
             grid.onGridValueChanged += OnChangedGrid;
         }
 
@@ -56,13 +59,19 @@ namespace Wsh.GridSystem {
             Debug.Log(ge.x + "_" + ge.y);
         }
 
+        private void ConvertWorldPosition(Vect2 worldPosition, Vector3 position) {
+            worldPosition.Set(position.x, position.y);
+        }
+
         void Update() {
             if(Input.GetMouseButtonDown(0)) {
-                grid.SetGridObject(ToolUtils.GetMouseWorldPosition(), new IntClass(99));
+                ConvertWorldPosition(m_tempPosition, ToolUtils.GetMouseWorldPosition());
+                grid.SetGridObject(m_tempPosition, new IntClass(99));
             }
         
             if(Input.GetMouseButtonDown(1)) {
-                Debug.Log(grid.GetGridObject(ToolUtils.GetMouseWorldPosition()));
+                ConvertWorldPosition(m_tempPosition, ToolUtils.GetMouseWorldPosition());
+                Debug.Log(grid.GetGridObject(m_tempPosition));
             }
         }
 
