@@ -2,7 +2,8 @@
     "name": "Wsh.GridSystem",
     "rootNamespace": "",
     "references": [
-        "GUID:9dbbbd115ce976447a16696066d7652a"
+        "GUID:9dbbbd115ce976447a16696066d7652a",
+        "GUID:edaf78f30c77a1c4ca672d7f4accd7f4"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

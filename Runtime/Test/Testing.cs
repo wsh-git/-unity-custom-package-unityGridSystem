@@ -3,7 +3,7 @@ using Wsh.Mathematics;
 
 namespace Wsh.GridSystem {
 
-    public class IntClass : IGridObject{
+    public class IntClass : BaseGridObject {
 
         private int m_x;
         private int m_y;
@@ -17,11 +17,11 @@ namespace Wsh.GridSystem {
             m_value = value;
         }
 
-        public int GetX() {
+        public override int GetX() {
             return m_x;
         }
 
-        public int GetY() {
+        public override int GetY() {
             return m_y;
         }
         
@@ -40,23 +40,24 @@ namespace Wsh.GridSystem {
         [SerializeField]
         private float cellSize;
         [SerializeField]
-        private int width;
+        private int row;
         [SerializeField]
-        private int height;
+        private int column;
 
-        private GridSystem.Grid<IntClass> grid;
+        private Grid<IntClass> grid;
 
         private Vect2 m_tempPosition;
         
         void Start() {
-            GridInfo gridInfo = new GridInfo(width, height, cellSize, offsetX, offsetY);
-            grid = new GridSystem.Grid<IntClass>(gridInfo, true, (GridSystem.Grid<IntClass> g, int x, int y, float cellSize) => { return new IntClass();});
+            m_tempPosition = new Vect2();
+            GridInfo gridInfo = new GridInfo(row, column, cellSize, offsetX, offsetY);
+            grid = new Grid<IntClass>(gridInfo, (Grid<IntClass> g, int x, int y) => { return new IntClass();});
             grid.onGridValueChanged += OnChangedGrid;
+            GridGizmos<IntClass> gridGizmos = new GridGizmos<IntClass>(grid);
         }
 
-        private void OnChangedGrid(object sender, System.EventArgs e) {
-            Grid<IntClass>.OnGridValueChangeEventArgs ge = e as Grid<IntClass>.OnGridValueChangeEventArgs;
-            Debug.Log(ge.x + "_" + ge.y);
+        private void OnChangedGrid(int x, int y, IntClass obj) {
+            Log.Info(x, y, obj.ToString());
         }
 
         private void ConvertWorldPosition(Vect2 worldPosition, Vector3 position) {
@@ -65,12 +66,12 @@ namespace Wsh.GridSystem {
 
         void Update() {
             if(Input.GetMouseButtonDown(0)) {
-                ConvertWorldPosition(m_tempPosition, ToolUtils.GetMouseWorldPosition());
+                ConvertWorldPosition(m_tempPosition, DebugUtils.GetMouseWorldPosition());
                 grid.SetGridObject(m_tempPosition, new IntClass(99));
             }
         
             if(Input.GetMouseButtonDown(1)) {
-                ConvertWorldPosition(m_tempPosition, ToolUtils.GetMouseWorldPosition());
+                ConvertWorldPosition(m_tempPosition, DebugUtils.GetMouseWorldPosition());
                 Debug.Log(grid.GetGridObject(m_tempPosition));
             }
         }
@@ -86,7 +87,7 @@ namespace Wsh.GridSystem {
             Vector3[] vertices;
             Vector2[] uvs;
             int[] triangles;
-            ToolUtils.CreateEmptyMeshArrays(m_grid.Width * m_grid.Height, out vertices, out uvs, out triangles);
+            DebugUtils.CreateEmptyMeshArrays(m_grid.Width * m_grid.Height, out vertices, out uvs, out triangles);
             for(int x = 0; x < m_grid.Width; x++) {
                 for(int y = 0; y < m_grid.Height; y++) {
 

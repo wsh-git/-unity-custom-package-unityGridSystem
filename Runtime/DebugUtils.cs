@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Wsh.GridSystem {
 
-    public class ToolUtils {
+    public class DebugUtils {
 
         public static TextMesh CreateWorldText(string text, Transform parent=null, Vector3 localPosition=default(Vector3), int fontSize=40, Color? color=null, TextAnchor textAnchor=TextAnchor.UpperLeft, TextAlignment textAlignment=TextAlignment.Left, int sortingOrder=5000) {
             if(color == null) {
