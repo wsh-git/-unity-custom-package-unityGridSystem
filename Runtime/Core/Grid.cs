@@ -65,6 +65,10 @@ namespace Wsh.GridSystem {
             SetGridObject(x, y, value);
         }
 
+        public TGridObject GetGridObject(Vect2Int coordinate) {
+            return GetGridObject(coordinate.X, coordinate.Y);
+        }
+
         public TGridObject GetGridObject(int x, int y) {
             if(CheckLimit(x, y)) {
                 return m_gridArray[x, y];
