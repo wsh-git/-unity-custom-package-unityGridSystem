@@ -82,5 +82,17 @@ namespace Wsh.GridSystem {
             GetXY(worldPosition, out x, out y);
             return GetGridObject(x, y);
         }
+    
+        public void Dispose() {
+            for(int x = 0;x < Row; x++) {
+                for( int y = 0; y < Column; y++) {
+                    m_gridArray[x, y].Dispose();
+                }
+            }
+            m_gridArray = null;
+            m_gridInfo.Dispose();
+            m_gridInfo = null;
+        }
+
     }
 }

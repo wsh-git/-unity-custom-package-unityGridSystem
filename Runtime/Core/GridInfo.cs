@@ -14,6 +14,8 @@ namespace Wsh.GridSystem {
         private float m_cellSize;
         private Vect2 m_originPosition;
 
+
+
         public GridInfo(int row, int column, float cellSize, float posX, float posY) {
             m_row = row;
             m_column = column;
@@ -21,6 +23,13 @@ namespace Wsh.GridSystem {
             m_originPosition = new Vect2(posX, posY);
         }
 
+
+        public void Dispose() {
+            m_row = 0;
+            m_column = 0;
+            m_cellSize = 0;
+            m_originPosition = null;
+        }
     }
 
 }
