@@ -40,10 +40,22 @@ namespace Wsh.GridSystem {
         }
 
         public void GetXY(Vect2 worldPosition, out int x, out int y) {
-            x = MathCalculator.FloorToInt((worldPosition.X - OriginPosition.X) / CellSize);
-            y = MathCalculator.FloorToInt((worldPosition.Y - OriginPosition.Y) / CellSize);
+            x = GetX(worldPosition.X);
+            y = GetY(worldPosition.Y);
         }
 
+        public void GetXY(Vect2 worldPosition, ref Vect2Int vect2) {
+            vect2.Set(GetX(worldPosition.X), GetY(worldPosition.Y));
+        }
+
+        private int GetX(float x) {
+            return MathCalculator.FloorToInt((x - OriginPosition.X) / CellSize);
+        }
+
+        private int GetY(float y) {
+            return MathCalculator.FloorToInt((y - OriginPosition.Y) / CellSize);
+        }
+        
         public void SetGridObject(int x, int y, TGridObject value) {
             if(CheckLimit(x, y)) {
                 m_gridArray[x, y] = value;
