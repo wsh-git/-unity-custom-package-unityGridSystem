@@ -16,9 +16,11 @@ namespace Wsh.GridSystem {
 
         private TGridObject[,] m_gridArray;
         private GridInfo m_gridInfo;
+        private float m_offset;
 
         public Grid(GridInfo gridInfo, Func<Grid<TGridObject>, int, int, TGridObject> createGridObject) {
             m_gridInfo = gridInfo;
+            m_offset = CellSize / 2f;
             m_gridArray = new TGridObject[Row, Column];
             for(int x = 0; x < Row; x++) {
                 for(int y = 0; y < Column; y++) {
@@ -32,7 +34,7 @@ namespace Wsh.GridSystem {
         }
 
         public void GetWorldPosition(int x, int y, ref Vect2 worldPosition) {
-            worldPosition.Set(x * CellSize + OriginPosition.X, y * CellSize + OriginPosition.Y);
+            worldPosition.Set(x * CellSize + m_offset + OriginPosition.X, y * CellSize + m_offset + OriginPosition.Y);
         }
 
         private bool CheckLimit(int x, int y) {
